@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace WindowsFormsApp9
+namespace WindowsFormsApp16
 {
     public class Comp   // комп. управление в игре 
     {
