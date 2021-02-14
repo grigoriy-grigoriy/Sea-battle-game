@@ -118,5 +118,78 @@ namespace WindowsFormsApp16
             startButton.Size = new Size(120, 25);
             this.Controls.Add(startButton);
         }
+
+        public void Start(object sender, EventArgs e)
+        {
+            isPlaying = true;
+
+        }
+
+        public bool InfofMapsNotEmpty()
+        {
+            bool isEmpty1 = true;
+            bool isEmpty2 = true;
+            for (int i = 1; i < mapSize; i++)
+            {
+                for (int j = 1; j < mapSize; j++)
+                {
+                    if (myMap[i, j] != 0)
+                        isEmpty1 = false;
+                    if (enemyMap[i, j] != 0)
+                        isEmpty2 = false;
+                }
+            }
+            if (isEmpty1 || isEmpty2)
+            {
+                if (isEmpty1)
+                {
+                    MessageBox.Show("Победил КОМПЬЮТЕР увы вы в пролете!");
+                }
+                else
+                {
+                    MessageBox.Show("Победил Игрок Ваша победа!");
+
+                }
+
+                return false;
+            }
+            else return true;
+
+        }
+
+        public void Configureishen(object sender, EventArgs e)
+        {
+            Button pressedButton = sender as Button;
+            if (!isPlaying)
+            {
+                if (myMap[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize] == 0)
+                {
+                    pressedButton.BackColor = Color.Red;
+                    myMap[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize] = 1;
+                }
+                else
+                {
+                    pressedButton.BackColor = Color.White;
+                    myMap[pressedButton.Location.Y / cellSize, pressedButton.Location.X / cellSize] = 0;
+                }
+            }
+        }
+
+        public void PlayerGeim(object sender, EventArgs e)
+        {
+
+            Button pressedButton = sender as Button;
+            bool playerTurn = Shoot(enemyMap, pressedButton);
+            if (!playerTurn)
+                comp.Shoot();
+
+            if (!InfofMapsNotEmpty())
+            {
+                this.Controls.Clear();
+                Init();
+            }
+        }
+
+
     }
 }
