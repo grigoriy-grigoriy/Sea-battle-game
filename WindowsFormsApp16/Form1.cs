@@ -190,6 +190,48 @@ namespace WindowsFormsApp16
             }
         }
 
+        public bool Shoot(int[,] map, Button pressedButton)
+        {
+            bool hit = false;
+            if (isPlaying)
+            {
+                int delta = 0;
+                if (pressedButton.Location.X > 320)
+                    delta = 320;
 
+                if (map[pressedButton.Location.Y / cellSize, (pressedButton.Location.X - delta) / cellSize] != 0)
+                {
+
+                    hit = true;
+                    map[pressedButton.Location.Y / cellSize, (pressedButton.Location.X - delta) / cellSize] = 0;
+                    pressedButton.BackColor = Color.Blue;
+                    pressedButton.Text = "X"; MessageBox.Show("Ура Вы попали по кораблю!");
+                }
+                else
+                {
+
+                    if (pressedButton.BackColor == Color.Black || pressedButton.BackColor == Color.Blue)
+                    {
+
+                        MessageBox.Show("Сюда нельзя Вы уже стреляли по этим координатам! :)");
+                    }
+                    else
+                    {
+                        hit = false;
+
+                        pressedButton.BackColor = Color.Black;
+
+
+                    }
+
+
+                }
+
+            }
+            return hit;
+
+        }
     }
 }
+    
+
