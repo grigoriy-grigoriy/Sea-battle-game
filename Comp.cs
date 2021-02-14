@@ -93,5 +93,36 @@ namespace WindowsFormsApp9
         }
 
 
+        public bool Shoot()
+        {
+            bool hit = false;
+            Random r = new Random();
+
+            int posX = r.Next(1, Form1.mapSize);
+            int posY = r.Next(1, Form1.mapSize);
+
+            while (enemyButtons[posX, posY].BackColor == Color.Blue || enemyButtons[posX, posY].BackColor == Color.Black)
+            {
+                posX = r.Next(1, Form1.mapSize);
+                posY = r.Next(1, Form1.mapSize);
+            }
+
+            if (enemyMap[posX, posY] != 0)
+            {
+                hit = true;
+                enemyMap[posX, posY] = 0;
+                enemyButtons[posX, posY].BackColor = Color.Blue;
+                enemyButtons[posX, posY].Text = "X";
+                MessageBox.Show("Увы по Вам попали подбит Ваш корабль!");
+            }
+            else
+            {
+                hit = false;
+                enemyButtons[posX, posY].BackColor = Color.Black;
+            }
+            if (hit)
+                Shoot();
+            return hit;
+        }
     }
 }
